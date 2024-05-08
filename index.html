@@ -1,0 +1,392 @@
+<style>
+        body {
+            font-family: 'Poppins'; line-height: 1.5; font-size: 14pt;
+            margin: 0; 
+            padding: 20px;
+            text-align: center;
+        }
+
+        .top-section {
+            background-color: #074173;
+        }
+
+        .top-section h1 {
+         	padding-top: 30px;
+        }
+
+
+        .top-section p {
+            margin: 0;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 30px;
+            font-size: 12pt;
+            color: white;
+        }
+
+        .input-section {
+        	font-family: 'Poppins'; line-height: 1.5; font-size: 14pt;
+            background-color: white;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .results-section {
+            background-color: white;
+            padding: 30px;
+        }
+
+        .result-box {
+            background-color: #D2FCFA;
+        }
+        
+        .footer-section {
+        	background-color: #2D2D2D;
+            padding: 25px;
+            color: white;
+            font-size: 10pt;
+            text-align: center;
+        }
+        
+        h1 {
+        	text-align: center;
+            font-weight: 800;
+            color: white;
+        }
+        
+        h4 {
+	        font-family: 'Poppins';
+            text-align: center;
+            font-weight: 100;
+            font-size: 12pt;
+            color: white;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        
+        h2 {
+        	text-align: center;
+            color: #074173;
+        }
+        
+        h3 {
+            font-family: 'Raleway';
+            padding-left: 20px;
+            padding-right: 20px;
+            font-size: 18pt;
+            color: #074173;
+        }
+        
+        h5 {
+        	padding-left: 20px;
+            padding-right: 20px;
+            font-size: 12pt;
+            font-weight: 400;
+            
+        }
+        
+        h6 {
+            color: #074173;
+            font-size: 14pt;
+            font-weight: 200;
+        }
+        
+        button {
+            font-family: 'Raleway';
+            background-color: #1679AB; 
+   			border: none;
+    		color: white;
+   			padding: 15px 32px;
+    		text-align: center;
+    		text-decoration: none;
+    		display: inline-block;
+    		font-size: 18px;
+    		margin: 4px 2px;
+    		cursor: pointer;
+    		border-radius: 15px;
+		}
+        
+        .text-box {
+    		border: 1px solid black; 
+   			padding: 20px; 
+    		font-size: 14px;
+        }
+        
+    </style>
+
+
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScamCheck</title>
+    <style>
+        .result-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            display: none; /* Hide result boxes initially */
+        }
+    </style>
+</head>
+
+<body>
+<div class="top-section">
+    <h1>ScamCheck</h1>
+    <p>Check if links in messages lead to Singapore Government websites and are safe for clicking.</p>
+</div>
+
+
+<div class="input-section">
+    <!-- Step 1: Decide to use text input or upload image -->
+    <p>Choose one of the following options:</p>
+    <input type="radio" id="textInputOption" name="inputOption" checked>
+    <label for="textInputOption" >Insert Text</label>
+    <br>
+    <input type="radio" id="imageInputOption" name="inputOption">
+    <label for="imageInputOption">Upload Image</label>
+
+    <!-- Step 2a: Text input -->
+    <div id="textInputSection">
+        <p>Paste message below:</p>
+        <textarea id="inputText" rows="10" cols="40"></textarea>
+    </div>
+
+    <!-- Step 2b: Image upload -->
+    <div id="imageInputSection" style="display:none;">
+        <br>
+        <input type="file" id="fileInput">
+        <br>
+        <br>
+        <button onclick="analyzeImage()">Analyse Image</button>
+        <br>
+        <div id="imageAndText" style="display:none;">
+            <br>
+            <h6>Uploaded image:</h6>
+            <img id="uploadedImage" src="" alt="Uploaded Image" style="max-width: 300px; margin-bottom: 10px;">
+            <br>
+            <h6>Message detected in image:</h6>
+            <div id="extractedText" class="text-box"></div></div>
+            <br>
+        </div>
+    </div>
+
+    <!-- Step 3: Check button -->
+    <br><button id="checkButton" onclick="checkInput()" style="display: block; margin: 0 auto;">Check Message</button>
+<br><br>
+
+</div>
+
+<div class="results-section"> 
+
+    <!-- Step 4: Results -->
+    <h2 id="resultsHeader" style="display:none;">Results</h2>
+    
+    <div class="result-box" id="verifiedResultBox">
+        <h3>Safe to click</h3>
+        <h5 id="verifiedResult"></p2>
+    </div>
+
+    <div class="result-box" id="unverifiedResultBox">
+        <h3>Not safe to click</h3>
+        <h5 id="unverifiedResult"></p2>
+    </div>
+
+    <div class="result-box" id="noLinksResultBox"> <!-- Added result box for message without links -->
+        <h5 id="noLinksResult"></p2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
+    <script>
+        // Step 1: Decide to use text input or upload image
+        var textInputOption = document.getElementById("textInputOption");
+        var imageInputOption = document.getElementById("imageInputOption");
+        var textInputSection = document.getElementById("textInputSection");
+        var imageInputSection = document.getElementById("imageInputSection");
+        var checkButton = document.getElementById("checkButton");
+
+        textInputOption.addEventListener("change", function() {
+            textInputSection.style.display = "block";
+            imageInputSection.style.display = "none";
+            hideImageAndText();
+            clearResults();
+            checkButton.style.display = "inline-block"; // Show the Check button for text input
+        });
+
+        imageInputOption.addEventListener("change", function() {
+            textInputSection.style.display = "none";
+            imageInputSection.style.display = "block";
+            hideImageAndText();
+            clearResults();
+            checkButton.style.display = "none"; // Hide the Check button for image input
+        });
+
+        function analyzeImage() {
+            var fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length > 0) {
+                var file = fileInput.files[0];
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var dataUrl = reader.result;
+        displayImageAndText(dataUrl);
+        checkButton.style.display = "inline-block"; // Show the Check button after analyzing image
+        
+        var buttonContainer = document.createElement('div');
+        buttonContainer.style.textAlign = "center"; // Set text alignment to center
+        buttonContainer.appendChild(checkButton.cloneNode(true)); // Append a clone of the button to the container
+        checkButton.parentNode.replaceChild(buttonContainer, checkButton); // Replace the original parent with the new container
+        
+    }
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload an image.');
+            }
+        }
+
+        function displayImageAndText(dataUrl) {
+            displayImage(dataUrl);
+            processImage(dataUrl);
+        }
+
+        function displayImage(dataUrl) {
+            var imageAndText = document.getElementById("imageAndText");
+            var uploadedImage = document.getElementById("uploadedImage");
+            var extractedText = document.getElementById("extractedText");
+            
+            imageAndText.style.display = "block"; // Display the image and extracted text
+            uploadedImage.src = dataUrl;
+            extractedText.textContent = ""; // Clear the extracted text
+        }
+
+        async function processImage(dataUrl) {
+            Tesseract.recognize(
+                dataUrl,
+                'eng',
+                { logger: m => console.log(m) }
+            ).then(({ data: { text } }) => {
+                displayExtractedText(text);
+            }).catch(error => {
+                console.error('Error during text recognition:', error);
+            });
+        }
+
+        function displayExtractedText(text) {
+            var extractedText = document.getElementById("extractedText");
+            extractedText.textContent = text.trim();
+        }
+
+        async function checkInput() {
+            if (textInputOption.checked) {
+                var inputText = document.getElementById("inputText").value.trim();
+                analyzeText(inputText);
+            } else {
+                var extractedText = document.getElementById("extractedText").textContent.trim();
+                analyzeText(extractedText);
+            }
+        }
+
+        async function analyzeText(text) {
+            var urls = extractUrls(text);
+
+            // Display Results header
+            var resultsHeader = document.getElementById("resultsHeader");
+            resultsHeader.style.display = "block";
+
+            // Analyze URLs
+            var govSGUrls = [];
+            var otherUrls = [];
+            for (const url of urls) {
+                if (isGovSGUrl(url)) {
+                    govSGUrls.push(url);
+                } else {
+                    otherUrls.push(url);
+                }
+            }
+
+            // Display Analysis Results
+            var verifiedResultBox = document.getElementById("verifiedResultBox");
+            var unverifiedResultBox = document.getElementById("unverifiedResultBox");
+            var noLinksResultBox = document.getElementById("noLinksResultBox"); // Added line
+            var verifiedResult = document.getElementById("verifiedResult");
+            var unverifiedResult = document.getElementById("unverifiedResult");
+            var noLinksResult = document.getElementById("noLinksResult"); // Added line
+
+            if (govSGUrls.length > 0) {
+                verifiedResult.innerHTML = (govSGUrls.length === 1 ?
+                    "The message contains 1 link to a verified Singapore Government website. Click on the link to access the website.<br><br>" +
+                    "<a href='" + govSGUrls[0] + "' target='_blank'>" + govSGUrls[0] + "</a>" :
+                    "The message contains " + govSGUrls.length + " " + (govSGUrls.length !== 1 ? "links" : "link") + " to verified Singapore Government website" + (govSGUrls.length !== 1 ? "s" : "") + ". Click on the links to access the websites.<br><br>" +
+                    govSGUrls.map(function (url, index) {
+                        return (index + 1) + ". <a href='" + url + "' target='_blank'>" + url + "</a>";
+                    }).join("<br>"));
+                verifiedResultBox.style.display = "block";
+            } else {
+                verifiedResultBox.style.display = "none";
+            }
+
+            if (otherUrls.length > 0) {
+                unverifiedResult.innerHTML = (otherUrls.length === 1 ?
+                    "The message contains 1 unverified web link. Please be careful.<br><br>" +
+                    otherUrls[0] :
+                    "We have detected " + otherUrls.length + " unverified web link" + (otherUrls.length !== 1 ? "s" : "") + " in the message. Please be careful.<br><br>" +
+                    otherUrls.map(function (url, index) {
+                        return (index + 1) + ". " + url;
+                    }).join("<br>"));
+                unverifiedResultBox.style.display = "block";
+            } else {
+                unverifiedResultBox.style.display = "none";
+            }
+
+            if (govSGUrls.length === 0 && otherUrls.length === 0) {
+                noLinksResult.textContent = "We did not find any web links in the message.";
+                noLinksResultBox.style.display = "block";
+            } else {
+                noLinksResultBox.style.display = "none";
+            }
+        }
+
+        function extractUrls(text) {
+            var urlRegex = /(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]+)+(?:\/[^\s]*)?)/g;
+            return text.match(urlRegex) || [];
+        }
+
+        function isGovSGUrl(url) {
+            return url.endsWith(".gov.sg") || url.includes(".gov.sg/");
+        }
+
+        function hideImageAndText() {
+            var imageAndText = document.getElementById("imageAndText");
+            var resultsHeader = document.getElementById("resultsHeader");
+            imageAndText.style.display = "none";
+            resultsHeader.style.display = "none";
+        }
+
+        function clearResults() {
+            var verifiedResultBox = document.getElementById("verifiedResultBox");
+            var unverifiedResultBox = document.getElementById("unverifiedResultBox");
+            var noLinksResultBox = document.getElementById("noLinksResultBox"); // Added line
+            verifiedResultBox.style.display = "none";
+            unverifiedResultBox.style.display = "none";
+            noLinksResultBox.style.display = "none"; // Added line
+        }
+    </script>
+    
+</div>
+
+
+<div class="footer-section">
+    <div style="font-family: 'Prompt'; font-family: 'Poppins';font-size: 16pt; font-weight: 800;">ScamCheck</div>
+    ScamCheck is in the developmental phase.<br>Please share your thoughts with us at scamchecksg@gmail.com.
+</div>
+
+</div>
+
+</body>
+</html>
