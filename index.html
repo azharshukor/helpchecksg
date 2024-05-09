@@ -286,21 +286,25 @@
     imageInputOption.addEventListener("change", handleImageInput);
 
     // Function to analyze the uploaded image
-    function analyzeImage() {
-        var fileInput = document.getElementById('fileInput');
-        if (fileInput.files.length > 0) {
-            var file = fileInput.files[0];
-            var reader = new FileReader();
-            reader.onload = function() {
-                var dataUrl = reader.result;
-                displayImageAndText(dataUrl);
-                checkButton.style.display = "inline-block"; // Show the Check button after analyzing image
-            }
-            reader.readAsDataURL(file);
-        } else {
-            alert('Please upload an image.');
+function analyzeImage() {
+    var fileInput = document.getElementById('fileInput');
+    if (fileInput.files.length > 0) {
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+            var dataUrl = reader.result;
+            // Clear previous results and reset interface
+            clearResults();
+            hideImageAndText();
+            // Display new image and start analysis
+            displayImageAndText(dataUrl);
+            checkButton.style.display = "inline-block"; // Show the Check button after analyzing image
         }
+        reader.readAsDataURL(file);
+    } else {
+        alert('Please upload an image.');
     }
+}
 
     // Function to display the uploaded image and extracted text
     function displayImageAndText(dataUrl) {
