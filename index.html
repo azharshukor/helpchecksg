@@ -269,9 +269,11 @@ function clearResults() {
     uploadedImage.src = ""; // Clear the uploaded image
     extractedText.textContent = ""; // Clear the extracted text
     
-    // Hide the uploaded image, extracted text, and results header
+    // Hide the uploaded image, extracted text, results header, and Check Message button
     imageAndText.style.display = "none";
     resultsHeader.style.display = "none";
+    checkButton.style.display = "none"; // Hide the Check Message button
+}
 
 // Initially, set the image input option as default
 handleImageInput();
