@@ -242,8 +242,8 @@ var checkButton = document.getElementById("checkButton");
 function handleImageInput() {
     textInputSection.style.display = "none";
     imageInputSection.style.display = "block";
-    hideImageAndText();
-    clearResults();
+    clearResults(); // Clear results when switching to image input
+    hideImageAndText(); // Hide uploaded image and extracted text
     checkButton.style.display = "none"; // Hide the Check button for image input
 }
 
@@ -251,10 +251,27 @@ function handleImageInput() {
 function handleTextInput() {
     textInputSection.style.display = "block";
     imageInputSection.style.display = "none";
-    hideImageAndText();
-    clearResults();
+    clearResults(); // Clear results when switching to text input
+    hideImageAndText(); // Hide uploaded image and extracted text
     checkButton.style.display = "inline-block"; // Show the Check button for text input
 }
+
+// Add event listeners
+textInputOption.addEventListener("change", handleTextInput);
+imageInputOption.addEventListener("change", handleImageInput);
+
+function clearResults() {
+    var imageAndText = document.getElementById("imageAndText");
+    var resultsHeader = document.getElementById("resultsHeader");
+    var uploadedImage = document.getElementById("uploadedImage");
+    var extractedText = document.getElementById("extractedText");
+    
+    uploadedImage.src = ""; // Clear the uploaded image
+    extractedText.textContent = ""; // Clear the extracted text
+    
+    // Hide the uploaded image, extracted text, and results header
+    imageAndText.style.display = "none";
+    resultsHeader.style.display = "none";
 
 // Initially, set the image input option as default
 handleImageInput();
