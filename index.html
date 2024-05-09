@@ -230,118 +230,110 @@
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
     
 	<script>
-	    
-        // Step 1: Decide to use text input or upload image
-var textInputOption = document.getElementById("textInputOption");
-var imageInputOption = document.getElementById("imageInputOption");
-var textInputSection = document.getElementById("textInputSection");
-var imageInputSection = document.getElementById("imageInputSection");
-var checkButton = document.getElementById("checkButton");
+    // Step 1: Decide to use text input or upload image
+    var textInputOption = document.getElementById("textInputOption");
+    var imageInputOption = document.getElementById("imageInputOption");
+    var textInputSection = document.getElementById("textInputSection");
+    var imageInputSection = document.getElementById("imageInputSection");
+    var checkButton = document.getElementById("checkButton");
 
-// Function to handle when the image input option is selected
-function handleImageInput() {
-    textInputSection.style.display = "none";
-    imageInputSection.style.display = "block";
-    clearResults(); // Clear results when switching to image input
-    hideImageAndText(); // Hide uploaded image and extracted text
-    checkButton.style.display = "none"; // Hide the Check button for image input
-}
-
-// Function to handle when the image input option is selected
-function handleImageInput() {
-    textInputSection.style.display = "none";
-    imageInputSection.style.display = "block";
-    clearResults(); // Clear results when switching to image input
-    hideImageAndText(); // Hide uploaded image and extracted text
-    clearImageInput(); // Clear uploaded image
-    checkButton.style.display = "none"; // Hide the Check button for image input
-}
-
-// Function to clear uploaded image input
-function clearImageInput() {
-    var fileInput = document.getElementById('fileInput');
-    fileInput.value = ""; // Clear file input value
-}
-
-// Add event listeners
-textInputOption.addEventListener("change", handleTextInput);
-imageInputOption.addEventListener("change", handleImageInput);;
-		
-function clearResults() {
-    var imageAndText = document.getElementById("imageAndText");
-    var resultsHeader = document.getElementById("resultsHeader");
-    var uploadedImage = document.getElementById("uploadedImage");
-    var extractedText = document.getElementById("extractedText");
-    
-    uploadedImage.src = ""; // Clear the uploaded image
-    extractedText.textContent = ""; // Clear the extracted text
-    
-    // Hide the uploaded image, extracted text, results header, and Check Message button
-    imageAndText.style.display = "none";
-    resultsHeader.style.display = "none";
-    checkButton.style.display = "none"; // Hide the Check Message button
-}
-
-// Initially, set the image input option as default
-handleImageInput();
-
-// Add event listeners
-textInputOption.addEventListener("change", handleTextInput);
-imageInputOption.addEventListener("change", handleImageInput);
-
-        function analyzeImage() {
-            var fileInput = document.getElementById('fileInput');
-            if (fileInput.files.length > 0) {
-                var file = fileInput.files[0];
-                var reader = new FileReader();
-                reader.onload = function() {
-                    var dataUrl = reader.result;
-        displayImageAndText(dataUrl);
-        checkButton.style.display = "inline-block"; // Show the Check button after analyzing image
-        
-        var buttonContainer = document.createElement('div');
-        buttonContainer.style.textAlign = "center"; // Set text alignment to center
-        buttonContainer.appendChild(checkButton.cloneNode(true)); // Append a clone of the button to the container
-        checkButton.parentNode.replaceChild(buttonContainer, checkButton); // Replace the original parent with the new container
-        
+    // Function to handle when the image input option is selected
+    function handleImageInput() {
+        textInputSection.style.display = "none";
+        imageInputSection.style.display = "block";
+        clearResults(); // Clear results when switching to image input
+        hideImageAndText(); // Hide uploaded image and extracted text
+        clearImageInput(); // Clear uploaded image
+        checkButton.style.display = "none"; // Hide the Check button for image input
     }
-                reader.readAsDataURL(file);
-            } else {
-                alert('Please upload an image.');
+
+    // Function to handle when the text input option is selected
+    function handleTextInput() {
+        textInputSection.style.display = "block";
+        imageInputSection.style.display = "none";
+        clearResults(); // Clear results when switching to text input
+        hideImageAndText(); // Hide uploaded image and extracted text
+        checkButton.style.display = "inline-block"; // Show the Check button for text input
+    }
+
+    // Function to clear uploaded image input
+    function clearImageInput() {
+        var fileInput = document.getElementById('fileInput');
+        fileInput.value = ""; // Clear file input value
+    }
+
+    // Function to clear results
+    function clearResults() {
+        var uploadedImage = document.getElementById("uploadedImage");
+        var extractedText = document.getElementById("extractedText");
+        uploadedImage.src = ""; // Clear the uploaded image
+        extractedText.textContent = ""; // Clear the extracted text
+    }
+
+    // Function to hide uploaded image and extracted text
+    function hideImageAndText() {
+        var imageAndText = document.getElementById("imageAndText");
+        var resultsHeader = document.getElementById("resultsHeader");
+        imageAndText.style.display = "none";
+        resultsHeader.style.display = "none";
+    }
+
+    // Initially, set the image input option as default
+    handleImageInput();
+
+    // Add event listeners
+    textInputOption.addEventListener("change", handleTextInput);
+    imageInputOption.addEventListener("change", handleImageInput);
+
+    // Function to analyze the uploaded image
+    function analyzeImage() {
+        var fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+            reader.onload = function() {
+                var dataUrl = reader.result;
+                displayImageAndText(dataUrl);
+                checkButton.style.display = "inline-block"; // Show the Check button after analyzing image
             }
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please upload an image.');
         }
+    }
 
-        function displayImageAndText(dataUrl) {
-            displayImage(dataUrl);
-            processImage(dataUrl);
-        }
+    // Function to display the uploaded image and extracted text
+    function displayImageAndText(dataUrl) {
+        var imageAndText = document.getElementById("imageAndText");
+        var uploadedImage = document.getElementById("uploadedImage");
+        var extractedText = document.getElementById("extractedText");
 
-        function displayImage(dataUrl) {
-            var imageAndText = document.getElementById("imageAndText");
-            var uploadedImage = document.getElementById("uploadedImage");
-            var extractedText = document.getElementById("extractedText");
-            
-            imageAndText.style.display = "block"; // Display the image and extracted text
-            uploadedImage.src = dataUrl;
-            extractedText.textContent = ""; // Clear the extracted text
-        }
+        imageAndText.style.display = "block"; // Display the image and extracted text
+        uploadedImage.src = dataUrl;
+        extractedText.textContent = ""; // Clear the extracted text
 
-        async function processImage(dataUrl) {
-            Tesseract.recognize(
-                dataUrl,
-                'eng',
-                { logger: m => console.log(m) }
-            ).then(({ data: { text } }) => {
-                displayExtractedText(text);
-            }).catch(error => {
-                console.error('Error during text recognition:', error);
-            });
-        }
+        // Process the uploaded image to extract text
+        processImage(dataUrl);
+    }
 
-        function displayExtractedText(text) {
-            var extractedText = document.getElementById("extractedText");
-            extractedText.textContent = text.trim();
-        }
+    // Function to process the uploaded image to extract text
+    async function processImage(dataUrl) {
+        Tesseract.recognize(
+            dataUrl,
+            'eng',
+            { logger: m => console.log(m) }
+        ).then(({ data: { text } }) => {
+            displayExtractedText(text);
+        }).catch(error => {
+            console.error('Error during text recognition:', error);
+        });
+    }
+
+    // Function to display the extracted text
+    function displayExtractedText(text) {
+        var extractedText = document.getElementById("extractedText");
+        extractedText.textContent = text.trim();
+    }
 
         async function checkInput() {
             if (textInputOption.checked) {
