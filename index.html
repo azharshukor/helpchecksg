@@ -247,19 +247,26 @@ function handleImageInput() {
     checkButton.style.display = "none"; // Hide the Check button for image input
 }
 
-// Function to handle when the text input option is selected
-function handleTextInput() {
-    textInputSection.style.display = "block";
-    imageInputSection.style.display = "none";
-    clearResults(); // Clear results when switching to text input
+// Function to handle when the image input option is selected
+function handleImageInput() {
+    textInputSection.style.display = "none";
+    imageInputSection.style.display = "block";
+    clearResults(); // Clear results when switching to image input
     hideImageAndText(); // Hide uploaded image and extracted text
-    checkButton.style.display = "inline-block"; // Show the Check button for text input
+    clearImageInput(); // Clear uploaded image
+    checkButton.style.display = "none"; // Hide the Check button for image input
+}
+
+// Function to clear uploaded image input
+function clearImageInput() {
+    var fileInput = document.getElementById('fileInput');
+    fileInput.value = ""; // Clear file input value
 }
 
 // Add event listeners
 textInputOption.addEventListener("change", handleTextInput);
-imageInputOption.addEventListener("change", handleImageInput);
-
+imageInputOption.addEventListener("change", handleImageInput);;
+		
 function clearResults() {
     var imageAndText = document.getElementById("imageAndText");
     var resultsHeader = document.getElementById("resultsHeader");
