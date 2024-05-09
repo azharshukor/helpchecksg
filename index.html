@@ -170,7 +170,7 @@
         <input type="file" id="fileInput">
         <br>
         <br>
-        <button onclick="analyzeImage()">Analyse Image</button>
+        <button onclick="analyzeImage()">Scan Image</button>
         <br>
         <div id="imageAndText" style="display:none;">
             <br>
@@ -342,9 +342,9 @@ imageInputOption.addEventListener("change", handleImageInput);
 
             if (govSGUrls.length > 0) {
                 verifiedResult.innerHTML = (govSGUrls.length === 1 ?
-                    "The message contains 1 link to a verified Singapore Government website. Click on the link to access the website.<br><br>" +
+                    "The message contains 1 link directing to a Government website or a website that has undergone review by a government official. Click on the link to access the website.<br><br>" +
                     "<a href='" + govSGUrls[0] + "' target='_blank'>" + govSGUrls[0] + "</a>" :
-                    "The message contains " + govSGUrls.length + " " + (govSGUrls.length !== 1 ? "links" : "link") + " to verified Singapore Government website" + (govSGUrls.length !== 1 ? "s" : "") + ". Click on the links to access the websites.<br><br>" +
+                    "The message contains " + govSGUrls.length + " " + (govSGUrls.length !== 1 ? "links" : "link") + " directing to a Government website or a website that has undergone review by a government official" + (govSGUrls.length !== 1 ? "s" : "") + ". Click on the links to access the websites.<br><br>" +
                     govSGUrls.map(function (url, index) {
                         return (index + 1) + ". <a href='" + url + "' target='_blank'>" + url + "</a>";
                     }).join("<br>"));
@@ -357,7 +357,7 @@ imageInputOption.addEventListener("change", handleImageInput);
                 unverifiedResult.innerHTML = (otherUrls.length === 1 ?
                     "The message contains 1 unverified web link. Please be careful.<br><br>" +
                     otherUrls[0] :
-                    "We have detected " + otherUrls.length + " unverified web link" + (otherUrls.length !== 1 ? "s" : "") + " in the message. Please be careful.<br><br>" +
+                    "We have detected " + otherUrls.length + " unverified web links" + (otherUrls.length !== 1 ? "s" : "") + " in the message. Please be careful.<br><br>" +
                     otherUrls.map(function (url, index) {
                         return (index + 1) + ". " + url;
                     }).join("<br>"));
@@ -405,7 +405,7 @@ imageInputOption.addEventListener("change", handleImageInput);
 
 <div class="footer-section">
     <div style="font-family: 'Outfit'; font-size: 16pt; font-weight: 600; color: white; padding-bottom: 5px;">helpcheck</div>
-    ScamCheck is in the developmental phase.<br>Please share your thoughts with us at helpchecksg@gmail.com.
+    Helpcheck is in the developmental phase.<br>Please share your thoughts with us at helpchecksg@gmail.com.
 </div>
 
 </div>
