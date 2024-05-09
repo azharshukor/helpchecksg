@@ -158,14 +158,14 @@
     <!-- Step 1: Decide to use text input or upload image -->
     <p>Choose one of the following options:</p>
    
-    <input type="radio" id="imageInputOption" name="inputOption">
+    <input type="radio" id="imageInputOption" name="inputOption" checked>
     <label for="imageInputOption">Upload Image</label>
     <br>
-    <input type="radio" id="textInputOption" name="inputOption" checked>
-    <label for="textInputOption" >Insert Text</label>
+    <input type="radio" id="textInputOption" name="inputOption">
+    <label for="textInputOption">Insert Text</label>
 	
     <!-- Step 2a: Image upload -->
-    <div id="imageInputSection" style="display:none;">
+    <div id="imageInputSection">
         <br>
         <input type="file" id="fileInput">
         <br>
@@ -185,13 +185,13 @@
 
 	
     <!-- Step 2b: Text input -->
-    <div id="textInputSection">
+    <div id="textInputSection" style="display:none;">
         <p>Paste message below:</p>
         <textarea id="inputText" rows="10" cols="40"></textarea>
     </div>
 
     <!-- Step 3: Check button -->
-    <br><button id="checkButton" onclick="checkInput()" style="display: block; margin: 0 auto;">Check Message</button>
+    <br><button id="checkButton" onclick="checkInput()" style="display: none; margin: 0 auto;">Check Message</button>
 <br><br>
 
 </div>
