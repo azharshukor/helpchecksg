@@ -154,19 +154,14 @@
 <div class="input-section">
     <!-- Step 1: Decide to use text input or upload image -->
     <p>Choose one of the following options:</p>
-    <input type="radio" id="textInputOption" name="inputOption" checked>
-    <label for="textInputOption" >Insert Text</label>
-    <br>
+   
     <input type="radio" id="imageInputOption" name="inputOption">
     <label for="imageInputOption">Upload Image</label>
-
-    <!-- Step 2a: Text input -->
-    <div id="textInputSection">
-        <p>Paste message below:</p>
-        <textarea id="inputText" rows="10" cols="40"></textarea>
-    </div>
-
-    <!-- Step 2b: Image upload -->
+    <br>
+    <input type="radio" id="textInputOption" name="inputOption" checked>
+    <label for="textInputOption" >Insert Text</label>
+	
+    <!-- Step 2a: Image upload -->
     <div id="imageInputSection" style="display:none;">
         <br>
         <input type="file" id="fileInput">
@@ -183,6 +178,13 @@
             <div id="extractedText" class="text-box"></div></div>
             <br>
         </div>
+    </div>
+
+	
+    <!-- Step 2b: Text input -->
+    <div id="textInputSection">
+        <p>Paste message below:</p>
+        <textarea id="inputText" rows="10" cols="40"></textarea>
     </div>
 
     <!-- Step 3: Check button -->
@@ -390,7 +392,7 @@
 
 <div class="footer-section">
     <div style="font-family: 'Prompt'; font-family: 'Poppins';font-size: 16pt; font-weight: 800; color: white; padding-bottom: 5px;">helpcheck</div>
-    ScamCheck is in the developmental phase.<br>Please share your thoughts with us at scamchecksg@gmail.com.
+    ScamCheck is in the developmental phase.<br>Please share your thoughts with us at helpchecksg@gmail.com.
 </div>
 
 </div>
