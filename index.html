@@ -140,9 +140,6 @@
     </style>
 
 
-
-
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -284,6 +281,16 @@
     // Add event listeners
     textInputOption.addEventListener("change", handleTextInput);
     imageInputOption.addEventListener("change", handleImageInput);
+
+// Function to reset the interface
+    function resetInterface() {
+        clearResults();
+        hideImageAndText();
+        checkButton.style.display = "none"; // Hide the Check button
+    }
+
+    // Add event listener to the "Choose File" button
+    document.getElementById('fileInput').addEventListener('click', resetInterface);
 
     // Function to analyze the uploaded image
 function analyzeImage() {
