@@ -1,132 +1,129 @@
-	@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 
-	@import url('https://fonts.googleapis.com/css2?family=Raleway+One&display=swap');
+body {
+    font-family: 'Poppins'; 
+    line-height: 1.5; 
+    font-size: 14pt;
+    margin: 0;
+    text-align: center;
+}
 
-	@import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap"); 
-	
-	body {
-            font-family: 'Poppins'; 
-	    line-height: 1.5; 
-	    font-size: 14pt;
-            margin: 0;
-            text-align: center;
-        }
+.top-section {
+    background-color: #074173;
+    padding: 10px;
+}
 
-        .top-section {
-            background-color: #074173;
-	    padding: 10px;
-        }
+.top-section h1 {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
 
-        .top-section h1 {
-            padding-top: 20px;
-	    padding-bottom: 10px;
-        }
+.top-section p {
+    margin: 0;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    font-size: 12pt;
+    color: white;
+}
 
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
 
-        .top-section p {
-            margin: 0;
-            padding-left: 30px;
-            padding-right: 30px;
-            padding-bottom: 30px;
-            font-size: 12pt;
-            color: white;
-        }
+.input-section {
+    font-family: 'Poppins'; 
+    line-height: 1.5; 
+    font-size: 14pt;
+    background-color: white;
+    padding: 30px;
+    margin-bottom: 20px;
+}
 
-	.container {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
+.results-section {
+    background-color: white;
+    padding: 30px;
+}
 
-        .input-section {
-            font-family: 'Poppins'; line-height: 1.5; font-size: 14pt;
-            background-color: white;
-            padding: 30px;
-	    margin-bottom: 20px;
-        }
+.result-box {
+    max-width: 600px;
+    margin: 0 auto 20px;
+    padding: 10px;
+    background-color: #D2FCFA;
+    border: 1px solid #ccc;
+    text-align: center;
+    display: none; /* Hide result boxes initially */
+}
 
-        .results-section {
-            background-color: white;
-            padding: 30px;
-        }
+h1 {
+    font-family: 'Outfit';
+    text-align: center;
+    font-weight: 600;
+    color: white;
+}
 
-        .result-box {
-            background-color: #D2FCFA;
-        }
-        
-        h1 {
-            font-family: 'Outfit';
-	    text-align: center;
-            font-weight: 600;
-            color: white;
-        }
-        
-        h2 {
-            text-align: center;
-            color: #074173;
-        }
-        
-        h3 {
-            font-family: 'Poppins';
-            padding-left: 20px;
-            padding-right: 20px;
-            font-size: 18pt;
-            color: #074173;
-        }
+h2 {
+    text-align: center;
+    color: #074173;
+}
 
-	h4 {
-	    font-family: 'Poppins';
-            text-align: center;
-            font-weight: 100;
-            font-size: 12pt;
-            color: white;
-            padding-left: 30px;
-            padding-right: 30px;
-        }
-        
-        h5 {
-            padding-left: 20px;
-            padding-right: 20px;
-            font-size: 12pt;
-            font-weight: 400;
-            
-        }
-        
-        h6 {
-            color: #074173;
-            font-size: 14pt;
-            font-weight: 200;
-        }
-        
-        button {
-            	font-family: 'Poppins';
-             	background-color: #1679AB; 
-   	     	border: none;
-    		color: white;
-   		padding: 15px 32px;
-    		text-align: center;
-    		text-decoration: none;
-    		display: inline-block;
-    		font-size: 18px;
-    		margin: 4px 2px;
-    		cursor: pointer;
-    		border-radius: 15px;
-		}
-        
-        .text-box {
-    		border: 1px solid black; 
-   		padding: 20px; 
-    		font-size: 14px;
-        }
+h3 {
+    font-family: 'Poppins';
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 18pt;
+    color: #074173;
+}
 
-	.result-box {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 20px;
-            display: none; /* Hide result boxes initially */
-        }
+h4 {
+    font-family: 'Poppins';
+    text-align: center;
+    font-weight: 100;
+    font-size: 12pt;
+    color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+}
 
-	 .footer-section {
+h5 {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 12pt;
+    font-weight: 400;
+}
+
+h6 {
+    color: #074173;
+    font-size: 14pt;
+    font-weight: 200;
+}
+
+button {
+    font-family: 'Poppins';
+    background-color: #1679AB; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.text-box {
+    border: 1px solid black; 
+    padding: 20px; 
+    font-size: 14px;
+}
+
+.footer-section {
     margin: 0;
     background-color: white;
     padding-top: 25px;
@@ -136,8 +133,7 @@
     text-align: center;
 }
 
-	.footer-section p {
+.footer-section p {
     padding-left: 10px;
     padding-right: 10px;
-	}
-        
+}
