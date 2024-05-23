@@ -32,6 +32,12 @@
             color: white;
         }
 
+	.container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
         .input-section {
             font-family: 'Poppins'; line-height: 1.5; font-size: 14pt;
             background-color: white;
